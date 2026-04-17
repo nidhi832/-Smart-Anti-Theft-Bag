@@ -1,6 +1,7 @@
 int PIR = 2;
 int tilt = 3;
 int reed = 4;
+int pressure = A0;   
 int buzzer = 9;
 
 int lastTilt = HIGH;
@@ -17,9 +18,10 @@ void loop() {
   int motion = digitalRead(PIR);
   int currentTilt = digitalRead(tilt);
   int state = digitalRead(reed);
+  int pressureValue = analogRead(pressure);  // ➕ added
 
   // -------- PRIORITY LOGIC --------
-  if (motion == HIGH || state == HIGH) {
+  if (motion == HIGH || state == HIGH || pressureValue < 10) {  // ➕ added condition
     digitalWrite(buzzer, LOW);   // 🔊 strong continuous sound
   }
 
@@ -35,3 +37,5 @@ void loop() {
 
   lastTilt = currentTilt;
 }
+
+
